@@ -16,3 +16,14 @@ const output = await replicate.run(
     }
   }
 );
+import openai_secret_manager
+
+assert "openai" in openai_secret_manager.get_services()
+secrets = openai_secret_manager.get_secret("openai")
+
+import openai
+openai.api_key = secrets["api_key"]
+
+prompt = "a black giraffe with a lion's head"
+response = openai.Image.create(prompt=prompt, n=1)
+image_url = response['data'][0]['url']
